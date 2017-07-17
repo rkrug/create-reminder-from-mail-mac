@@ -25,38 +25,38 @@
 
 # Set this according to your email account names and Reminder's lists
 # Depending on your needs multiple accounts can send reminders to one or more reminder lists
-set Work1AccountName to "Work"
-set Work1RemindersList to "Work"
-set Work2AccountName to "WorkOther"
-set Work2RemindersList to "Work"
-set Personal1AccountName to "Privat"
-set Personal1RemindersList to "Privat"
-set Personal2AccountName to "iCloud"
-set Personal2RemindersList to "Privat"
-set Personal3AccountName to "Google"
-set Personal3RemindersList to "Privat"
-set Personal4AccountName to "PrivatOther"
-set Personal4RemindersList to "Privat"
+set Work1AccountName to "iCloud"
+set Work1RemindersList to "TODO Emails"
+# set Work2AccountName to "WorkOther"
+# set Work2RemindersList to "Work"
+# set Personal1AccountName to "Privat"
+# set Personal1RemindersList to "Privat"
+# set Personal2AccountName to "iCloud"
+# set Personal2RemindersList to "Privat"
+# set Personal3AccountName to "Google"
+# set Personal3RemindersList to "Privat"
+# set Personal4AccountName to "PrivatOther"
+# set Personal4RemindersList to "Privat"
 
 # Set the name of the default reminder list (depends on your OS Language)
 set DefaultReminderList to "Reminders"
 
 # On my machine 5 is the Purple flag, which is the color I would like to use for mails flagged as Reminder
-# choose something between 1 and 6
+# choose something between 0 and 6
 set FlagIndex to 5
 
 # Set the default reminder date
 # these are the possible choices: "Tomorrow", "2 Days", "3 Days", "4 Days", "End of Week", "Next Monday", "1 Week", "2 Weeks", "1 Month", "2 Months", "3 Months", "Specify"
-set defaultReminder to "1 Week"
+set defaultReminder to "2 Days"
 
 # Set the default reminder time in hours after midnight, I suggest any number between 0,5 and 23,5
 # for a reminder at "8:00 am" set "8", for "3 PM" or "15:00" set "15", for "8h45" set "8,75"
-set defaultReminderTime to "9"
+set defaultReminderTime to "10"
 
 # For 'zero-mail' inbox: if this switch is set 'on' it will move the message automatically to the archive once a reminder has been set,
 # Set to 'off' if you want to keep the message where it is 
 # switch 'auto-achive' "on" or "off"
-set switchArchive to "on"
+set switchArchive to "off"
 
 # Set the archive target mailbox
 set Work1Archive to "Archive"
@@ -147,7 +147,7 @@ tell application "Mail"
 	(choose from list {"Tomorrow", "2 Days", "3 Days", "4 Days", "End of Week", "Next Monday", "1 Week", "2 Weeks", "1 Month", "2 Months", "3 Months", "Specify"} default items defaultReminder OK button name "Create" with prompt "Set follow-up time" with title "Create Reminder from E-Mail")
 	
 	set reminderDate to result as rich text
-
+	
 	# exit if user clicks Cancel or Escape
 	if reminderDate is "false" then return
 	
@@ -167,25 +167,25 @@ tell application "Mail"
 	set theUrl to {"message:%3C" & my replaceText(theOrigMessageId, "%", "%25") & "%3E"}
 	
 	# determine correct Reminder's list based on account the email/message is in
-	if name of account of mailbox of theMessage is Work1AccountName then
-		set RemindersList to Work1RemindersList
-	else if name of account of mailbox of theMessage is Work2AccountName then
-		set RemindersList to Work2RemindersList
-	else if name of account of mailbox of theMessage is Personal1AccountName then
-		set RemindersList to Personal1RemindersList
-	else if name of account of mailbox of theMessage is Personal2AccountName then
-		set RemindersList to Personal2RemindersList
-	else if name of account of mailbox of theMessage is Personal3AccountName then
-		set RemindersList to Personal3RemindersList
-	else if name of account of mailbox of theMessage is Personal4AccountName then
-		set RemindersList to Personal4RemindersList
-	else if account type of account of mailbox of theMessage is "r/o" then
-		#default list name in Reminders
-		set RemindersList to DefaultReminderList
-	else
-		#default list name in Reminders
-		set RemindersList to DefaultReminderList
-	end if
+	# 	if name of account of mailbox of theMessage is Work1AccountName then
+	set RemindersList to Work1RemindersList
+	# 	else if name of account of mailbox of theMessage is Work2AccountName then
+	# 		set RemindersList to Work2RemindersList
+	# 	else if name of account of mailbox of theMessage is Personal1AccountName then
+	# 		set RemindersList to Personal1RemindersList
+	# 	else if name of account of mailbox of theMessage is Personal2AccountName then
+	# 		set RemindersList to Personal2RemindersList
+	# 	else if name of account of mailbox of theMessage is Personal3AccountName then
+	# 		set RemindersList to Personal3RemindersList
+	# 	else if name of account of mailbox of theMessage is Personal4AccountName then
+	# 		set RemindersList to Personal4RemindersList
+	# 	else if account type of account of mailbox of theMessage is "r/o" then
+	# 		#default list name in Reminders
+	# 		set RemindersList to DefaultReminderList
+	# 	else
+	# 		#default list name in Reminders
+	# 		set RemindersList to DefaultReminderList
+	# 	end if
 	
 	# dispatch the mailbox where to archive the selected message
 	if switchArchive is "on" then
