@@ -26,7 +26,7 @@
 # Set this according to your email account names and Reminder's lists
 # Depending on your needs multiple accounts can send reminders to one or more reminder lists
 set Work1AccountName to "iCloud"
-set Work1RemindersList to "TODO Emails"
+set Work1RemindersList to "Inbox"
 # set Work2AccountName to "WorkOther"
 # set Work2RemindersList to "Work"
 # set Personal1AccountName to "Privat"
@@ -79,7 +79,7 @@ tell application "Mail"
 		return
 	end try
 	
-	set theSubject to theMessage's subject
+	set theSubject to theMessage's subject & " -FROM- " & theMessage's sender & " -TO- "
 	set theOrigMessageId to theMessage's message id
 	set theUrl to {"message:%3C" & my replaceText(theOrigMessageId, "%", "%25") & "%3E"}
 	
@@ -135,7 +135,7 @@ tell application "Mail"
 		
 		set theSubjectChoice to button returned of result
 		if theSubjectChoice is "OK" then
-			set theSubject to theMessage's subject
+			set theSubject to theSubject
 		else if theSubjectChoice is "Cancel" then
 			return
 		else if theSubjectChoice is "Other" then
